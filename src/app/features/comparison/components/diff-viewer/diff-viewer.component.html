@@ -1,0 +1,27 @@
+<ng-container *ngIf="snapshot.beforeLines.length || snapshot.afterLines.length; else emptyDiffState">
+  <div class="diff-layout">
+    <section class="diff-column before">
+      <header>{{ snapshot.beforeLabel }}</header>
+      <div class="code-block">
+        <div class="code-line" *ngFor="let line of snapshot.beforeLines" [attr.data-kind]="line.kind">
+          <span class="line-number">{{ line.line }}</span>
+          <code>{{ line.code }}</code>
+        </div>
+      </div>
+    </section>
+
+    <section class="diff-column after">
+      <header>{{ snapshot.afterLabel }}</header>
+      <div class="code-block">
+        <div class="code-line" *ngFor="let line of snapshot.afterLines" [attr.data-kind]="line.kind">
+          <span class="line-number">{{ line.line }}</span>
+          <code>{{ line.code }}</code>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-container>
+
+<ng-template #emptyDiffState>
+  <div class="empty-state">Sem comparacao de testes ainda. Execute uma rodada para gerar diff.</div>
+</ng-template>

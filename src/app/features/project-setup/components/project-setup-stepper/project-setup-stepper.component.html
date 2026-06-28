@@ -1,0 +1,148 @@
+<mat-stepper linear class="setup-stepper">
+  <mat-step [stepControl]="mavenPathControl">
+    <ng-template matStepLabel>Localizar Maven</ng-template>
+
+    <p class="step-text">
+      Clique em Detectar Maven para preencher automaticamente. Se preferir, informe o caminho
+      manualmente.
+    </p>
+
+    <div class="maven-detect-row">
+      <button
+        mat-stroked-button
+        type="button"
+        class="detect-btn"
+        (click)="detectMavenPath()"
+        [disabled]="isDetectingMaven"
+      >
+        {{ isDetectingMaven ? 'Detectando...' : 'Detectar Maven' }}
+      </button>
+
+      <span class="version-chip" *ngIf="detectedVersion">Versao {{ detectedVersion }}</span>
+    </div>
+
+    <div class="detection-feedback" [attr.data-tone]="detectionTone">
+      {{ detectionMessage }}
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Caminho Maven</mat-label>
+      <input
+        matInput
+        [formControl]="mavenPathControl"
+        placeholder="/usr/bin/mvn ou C:\\tools\\apache-maven\\bin\\mvn.cmd"
+      />
+      <button mat-icon-button matSuffix (click)="openMavenFileBrowser()" type="button" aria-label="Procurar arquivo">
+        <lucide-icon [img]="fileIcon" size="16"></lucide-icon>
+      </button>
+      <mat-hint>Use o binario usado na sua pipeline local, como /usr/bin/mvn ou mvn.cmd.</mat-hint>
+      <mat-error *ngIf="mavenPathControl.invalid">Informe um caminho valido.</mat-error>
+    </mat-form-field>
+
+    <div class="step-actions">
+      <button mat-flat-button matStepperNext class="primary-btn" [disabled]="mavenPathControl.invalid">
+        Continuar
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Selecionar classes alvo</ng-template>
+
+    <p class="step-text">
+      Escolha as classes com maior impacto no mutation score. As badges mostram prioridade da rodada.
+    </p>
+
+    <div class="class-list">
+      <article
+        class="class-item"
+        *ngFor="let option of classOptions"
+        [class.selected]="isSelectedClass(option.id)"
+      >
+        <div class="main-line">
+          <mat-checkbox
+            [checked]="isSelectedClass(option.id)"
+            (change)="toggleClassSelection(option.id, $event)"
+          >
+            <span class="class-id">{{ option.id }}</span>
+          </mat-checkbox>
+          <app-status-badge [label]="option.statusLabel" [tone]="option.statusTone"></app-status-badge>
+        </div>
+
+        <div class="meta-line">
+          <span>{{ option.packageName }}</span>
+          <span
+            *ngIf="option.mutantsAreReal; else estimatedMutants"
+            matTooltip="Numero medido na ultima execucao do PIT para esta classe."
+          >
+            {{ option.estimatedMutants }} mutantes
+          </span>
+          <ng-template #estimatedMutants>
+            <span
+              matTooltip="Estimativa por categoria de classe (controller, service, config, etc.), nao medida via PIT. O valor real aparece no dashboard apos a execucao."
+            >
+              ~{{ option.estimatedMutants }} mutantes (estimativa)
+            </span>
+          </ng-template>
+        </div>
+      </article>
+    </div>
+
+    <div class="empty-state" *ngIf="!classOptions.length">
+      Nenhuma classe encontrada para este projeto ainda.
+    </div>
+
+    <div class="step-actions dual">
+      <button mat-button matStepperPrevious>Voltar</button>
+      <button mat-flat-button matStepperNext class="primary-btn" [disabled]="!selectedClassIds.length">
+        Revisar
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Revisar e iniciar</ng-template>
+
+    <div class="review-panel">
+      <p class="review-title">{{ selectedClassIds.length }} classes prontas para analise</p>
+
+      <ul>
+        <li *ngFor="let classOption of selectedClasses">
+          {{ classOption.id }} - {{ classOption.packageName }}
+        </li>
+      </ul>
+
+      <div class="step-actions dual">
+        <button mat-button matStepperPrevious>Editar</button>
+        <button
+          mat-flat-button
+          class="primary-btn"
+          [disabled]="isStartingRun || !selectedClassIds.length"
+          (click)="executeMutationTests()"
+        >
+          {{ isStartingRun ? 'Gerando com IA...' : 'Gerar testes com IA' }}
+        </button>
+      </div>
+
+      <div class="run-feedback" *ngIf="runMessage" [attr.data-tone]="runTone">
+        <p>{{ runMessage }}</p>
+        <small *ngIf="lastRunId">runId: {{ lastRunId }}</small>
+      </div>
+
+      <div class="ai-results" *ngIf="aiResults.length">
+        <div
+          class="ai-result-item"
+          *ngFor="let r of aiResults"
+          [attr.data-passed]="r.passed"
+        >
+          <span class="result-icon">{{ r.passed ? '✓' : '✗' }}</span>
+          <span class="result-name">{{ r.className }}</span>
+          <span class="result-path" *ngIf="r.passed && r.testPath">{{ r.testPath }}</span>
+          <ul class="result-errors" *ngIf="!r.passed && r.errors.length">
+            <li *ngFor="let e of r.errors">{{ e }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

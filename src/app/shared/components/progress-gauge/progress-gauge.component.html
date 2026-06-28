@@ -1,0 +1,19 @@
+<figure class="gauge" [attr.data-tone]="tone">
+  <svg class="gauge-svg" viewBox="0 0 130 130" aria-hidden="true">
+    <circle class="track" cx="65" cy="65" [attr.r]="radius"></circle>
+    <circle
+      class="progress"
+      cx="65"
+      cy="65"
+      [attr.r]="radius"
+      [attr.stroke-dasharray]="circumference"
+      [attr.stroke-dashoffset]="strokeOffset"
+    ></circle>
+  </svg>
+
+  <figcaption>
+    <span class="value">{{ roundedValue }}%</span>
+    <span class="label">{{ label }}</span>
+    <small>{{ caption }}</small>
+  </figcaption>
+</figure>

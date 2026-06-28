@@ -1,0 +1,17 @@
+<section class="floating-card">
+  <header class="card-header" *ngIf="title || subtitle || icon">
+    <div class="heading">
+      <span class="icon-wrap" *ngIf="icon">
+        <lucide-icon [img]="icon" size="18"></lucide-icon>
+      </span>
+      <div>
+        <h2>{{ title }}</h2>
+        <p *ngIf="subtitle">{{ subtitle }}</p>
+      </div>
+    </div>
+    <ng-content select="[card-action]"></ng-content>
+  </header>
+  <div class="card-content">
+    <ng-content></ng-content>
+  </div>
+</section>

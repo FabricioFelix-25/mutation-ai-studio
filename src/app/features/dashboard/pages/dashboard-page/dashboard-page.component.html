@@ -1,0 +1,72 @@
+<div class="workspace-shell">
+  <header class="workspace-topbar">
+    <a routerLink="/" class="back-link" aria-label="Voltar para lista de projetos">
+      <lucide-icon [img]="backIcon" size="16"></lucide-icon>
+      <span>Voltar para projetos</span>
+    </a>
+
+    <div class="project-header">
+      <h1>{{ activeProject?.name }}</h1>
+      <p>{{ activeProject?.repositoryPath }}</p>
+    </div>
+
+    <button type="button" class="theme-toggle" (click)="toggleTheme()" aria-label="Alternar tema">
+      <lucide-icon [img]="themeService.isDarkMode() ? sunIcon : moonIcon" size="16"></lucide-icon>
+      <span>{{ themeService.isDarkMode() ? 'Modo claro' : 'Modo noturno' }}</span>
+    </button>
+  </header>
+
+  <div class="api-status-banner" *ngIf="!isApiConnected">
+    <span class="status-dot warning"></span>
+    <span>API do Backend offline. Exibindo dados simulados. Inicie o backend com <code>npm run start:backend</code> ou <code>npm run dev</code> para usar dados reais.</span>
+  </div>
+
+  <section class="summary-grid">
+    <article class="summary-card" *ngFor="let stat of quickStats" [attr.data-tone]="stat.tone">
+      <p>{{ stat.label }}</p>
+      <h2>{{ stat.value }}</h2>
+      <small>{{ stat.trend }}</small>
+    </article>
+  </section>
+
+  <section class="section-block">
+    <h2>1. Configurar projeto</h2>
+    <app-floating-card title="Configuracao" subtitle="Maven e classes alvo" [icon]="setupIcon">
+      <app-project-setup-stepper></app-project-setup-stepper>
+    </app-floating-card>
+  </section>
+
+  <section class="section-grid">
+    <div class="grid-col">
+      <h2>2. Metricas</h2>
+      <app-floating-card
+        class="stretch-card"
+        title="Resultados"
+        subtitle="Acompanhamento da rodada"
+        [icon]="metricsIcon"
+      >
+        <app-metrics-panel></app-metrics-panel>
+      </app-floating-card>
+    </div>
+
+    <div class="grid-col">
+      <h2>3. Analise textual</h2>
+      <app-floating-card
+        class="stretch-card"
+        title="Resumo"
+        subtitle="Pontos de melhoria"
+        [icon]="analysisIcon"
+      >
+        <app-quality-insights></app-quality-insights>
+      </app-floating-card>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <h2>4. Comparacao de testes</h2>
+    <app-floating-card title="Diff" subtitle="Antes e depois" [icon]="diffIcon">
+      <app-diff-viewer></app-diff-viewer>
+    </app-floating-card>
+  </section>
+</div>
+

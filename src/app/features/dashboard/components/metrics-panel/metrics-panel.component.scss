@@ -1,0 +1,168 @@
+:host {
+  display: block;
+}
+
+.panel-header {
+  margin-bottom: 0.7rem;
+}
+
+.panel-header p {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 70ch;
+}
+
+/* ── layout principal ─────────────────────────────────── */
+.result-layout {
+  align-items: stretch;
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+}
+
+/* ── bloco do score principal ─────────────────────────── */
+.score-block {
+  background: var(--gray-25);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+}
+
+.score-header {
+  align-items: baseline;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.score-title {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.score-delta {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.score-delta strong {
+  color: var(--text-primary);
+}
+
+.score-value {
+  color: var(--text-primary);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0.25rem 0;
+}
+
+.score-caption {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+/* ── barras de progresso ──────────────────────────────── */
+.score-bar-track,
+.mini-bar-track {
+  background: var(--surface-border);
+  border-radius: 999px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.score-bar-track {
+  height: 10px;
+}
+
+.mini-bar-track {
+  height: 6px;
+}
+
+.score-bar-fill,
+.mini-bar-fill {
+  border-radius: 999px;
+  height: 100%;
+  min-width: 3px;
+  transition: width 0.4s ease;
+}
+
+.tone-emerald   { background: var(--emerald-600); }
+.tone-blue-fill { background: var(--blue-soft-600); }
+.tone-amber-fill{ background: var(--amber-500); }
+
+/* ── cards laterais ───────────────────────────────────── */
+.side-metrics {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.metric-card {
+  background: var(--gray-25);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem 0.95rem;
+}
+
+.metric-top {
+  align-items: baseline;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.metric-delta {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.metric-delta strong {
+  color: var(--text-primary);
+}
+
+.metric-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tone-blue-value  { color: var(--blue-soft-600); }
+.tone-amber-value { color: var(--amber-500); }
+
+.metric-caption {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+/* ── estado vazio ─────────────────────────────────────── */
+.empty-state {
+  background: var(--gray-25);
+  border: 1px dashed var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  padding: 0.8rem;
+}
+
+@media (max-width: 1024px) {
+  .result-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

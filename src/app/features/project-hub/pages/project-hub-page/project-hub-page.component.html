@@ -1,0 +1,97 @@
+<div class="hub-shell">
+  <header class="hub-topbar">
+    <div class="brand">Mutation Studio</div>
+
+    <div class="topbar-actions">
+      <div class="model-field">
+        <label class="model-label" for="aiModelInput">Modelo Ollama</label>
+        <input
+          id="aiModelInput"
+          class="model-input"
+          type="text"
+          [formControl]="aiModelControl"
+          (blur)="saveAiModel()"
+          (keydown.enter)="saveAiModel()"
+          placeholder="ex.: qwen2.5-coder:7b"
+          spellcheck="false"
+        />
+      </div>
+
+      <button type="button" class="theme-toggle" (click)="toggleTheme()" aria-label="Alternar tema">
+        <lucide-icon [img]="themeService.isDarkMode() ? sunIcon : moonIcon" size="16"></lucide-icon>
+        <span>{{ themeService.isDarkMode() ? 'Modo claro' : 'Modo noturno' }}</span>
+      </button>
+
+      <div class="profile-chip">Workspace local</div>
+    </div>
+  </header>
+
+  <main class="hub-content">
+    <div class="api-status-banner" *ngIf="!isApiConnected">
+      <span class="status-dot warning"></span>
+      <span>API do Backend offline. Exibindo dados simulados. Inicie o backend com <code>npm run start:backend</code> ou <code>npm run dev</code> para usar dados reais.</span>
+    </div>
+
+    <section class="intro">
+      <h1>Selecionar projeto</h1>
+      <p>Escolha um projeto para abrir o workspace, ou cadastre um novo.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Projetos cadastrados</h2>
+
+      <article class="project-row" *ngFor="let project of projects">
+        <div class="project-main">
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.repositoryPath }}</p>
+        </div>
+
+        <div class="project-side">
+          <span class="score-chip">Score {{ project.lastMutationScore }}%</span>
+          <small>{{ project.updatedAt }}</small>
+        </div>
+
+        <div class="actions">
+          <button mat-flat-button class="primary-btn" (click)="openProject(project.id)">Abrir</button>
+          <button mat-stroked-button class="danger-btn" (click)="deleteProject(project.id)">Excluir</button>
+        </div>
+      </article>
+
+      <p class="empty" *ngIf="!projects.length">Nenhum projeto cadastrado.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Adicionar projeto</h2>
+
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome do projeto</mat-label>
+          <input matInput [formControl]="projectNameControl" placeholder="Ex.: Payments API" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Caminho do repositorio</mat-label>
+          <input matInput [formControl]="repositoryPathControl" placeholder="C:\\repos\\payments-api" />
+          <button mat-icon-button matSuffix (click)="openRepoFolderBrowser()" type="button" aria-label="Procurar pasta">
+            <lucide-icon [img]="folderIcon" size="16"></lucide-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Caminho Maven (opcional)</mat-label>
+          <input matInput [formControl]="mavenPathControl" placeholder="/usr/bin/mvn ou C:\\tools\\maven\\bin\\mvn.cmd" />
+          <button mat-icon-button matSuffix (click)="openMavenFileBrowser()" type="button" aria-label="Procurar arquivo">
+            <lucide-icon [img]="fileIcon" size="16"></lucide-icon>
+          </button>
+          <mat-hint>Pode deixar em branco e detectar no workspace, seja no Linux ou no Windows.</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="panel-actions">
+        <button mat-flat-button class="primary-btn" (click)="addProject()">Adicionar projeto</button>
+      </div>
+
+      <p class="feedback" *ngIf="feedbackMessage" [attr.data-tone]="feedbackTone">{{ feedbackMessage }}</p>
+    </section>
+  </main>
+</div>

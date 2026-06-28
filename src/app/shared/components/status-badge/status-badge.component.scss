@@ -1,0 +1,29 @@
+.status-badge {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.74rem;
+  font-weight: 600;
+  gap: 0.35rem;
+  letter-spacing: 0.01em;
+  padding: 0.3rem 0.65rem;
+}
+
+.soft-blue {
+  background: var(--blue-soft-100);
+  color: var(--blue-soft-700);
+}
+
+.emerald {
+  background: var(--emerald-100);
+  color: var(--emerald-700);
+}
+
+.amber {
+  background: var(--amber-100);
+  color: var(--amber-700);
+}
+
+.muted {
+  background: var(--gray-100);
+  color: var(--text-secondary);
+}

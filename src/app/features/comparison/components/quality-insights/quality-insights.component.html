@@ -1,0 +1,23 @@
+<p class="insights-intro">
+  Resumo automatizado de qualidade: destaca impacto dos ajustes e sugere proximos passos em
+  linguagem objetiva.
+</p>
+
+<ng-container *ngIf="feedbackList.length; else emptyInsightsState">
+  <div class="feedback-feed">
+    <article class="feedback-card" *ngFor="let feedback of feedbackList">
+      <div class="feedback-head">
+        <h4>{{ feedback.title }}</h4>
+        <span class="feedback-level">{{ labelForTone(feedback.tone) }}</span>
+      </div>
+      <p class="feedback-detail">{{ feedback.detail }}</p>
+      <p class="feedback-recommendation">{{ feedback.recommendation }}</p>
+    </article>
+  </div>
+
+  <footer class="insights-footer">Ultima rodada analisada com base nos resultados da execucao local.</footer>
+</ng-container>
+
+<ng-template #emptyInsightsState>
+  <div class="empty-state">Sem analise textual ainda. Execute uma rodada para gerar insights.</div>
+</ng-template>

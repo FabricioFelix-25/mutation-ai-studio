@@ -1,0 +1,236 @@
+:host {
+  display: block;
+}
+
+.hub-shell {
+  min-height: 100vh;
+}
+
+.hub-topbar {
+  align-items: center;
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--surface-border);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.85rem 1.1rem;
+}
+
+.brand {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.topbar-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.model-field {
+  align-items: center;
+  display: flex;
+  gap: 0.4rem;
+  margin-right: 0.25rem;
+}
+
+.model-label {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.model-input {
+  background: var(--gray-100);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  outline: none;
+  padding: 0.3rem 0.55rem;
+  width: 180px;
+}
+
+.model-input:focus {
+  border-color: var(--text-secondary);
+}
+
+.theme-toggle {
+  align-items: center;
+  background: var(--gray-100);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 600;
+  gap: 0.35rem;
+  padding: 0.3rem 0.55rem;
+}
+
+.theme-toggle:hover {
+  color: var(--text-primary);
+}
+
+.profile-chip {
+  background: var(--gray-100);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.55rem;
+}
+
+.hub-content {
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 1rem;
+}
+
+.intro h1 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.intro p {
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  margin: 0.25rem 0 0;
+}
+
+.panel {
+  background: var(--surface-color);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  margin-top: 0.8rem;
+  padding: 0.9rem;
+}
+
+.panel h2 {
+  color: var(--text-primary);
+  font-size: 0.98rem;
+  margin: 0 0 0.7rem;
+}
+
+.project-row {
+  align-items: center;
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  margin-bottom: 0.6rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.project-main h3 {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.project-main p {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  margin: 0.1rem 0 0;
+}
+
+.project-side {
+  text-align: right;
+}
+
+.score-chip {
+  background: var(--gray-100);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  display: inline-block;
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 0.2rem 0.45rem;
+}
+
+.project-side small {
+  color: var(--text-secondary);
+  display: block;
+  font-size: 0.72rem;
+  margin-top: 0.2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.primary-btn {
+  background: #2f66c8;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.danger-btn {
+  border-color: #ebcaca;
+  color: #9b3a3a;
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.35rem;
+}
+
+.feedback {
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.77rem;
+  margin: 0.55rem 0 0;
+  padding: 0.35rem 0.5rem;
+}
+
+.feedback[data-tone='success'] {
+  border-color: #cce8d9;
+  color: var(--emerald-700);
+}
+
+.feedback[data-tone='error'] {
+  border-color: #ebcaca;
+  color: #9b3a3a;
+}
+
+@media (max-width: 980px) {
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-side {
+    text-align: left;
+  }
+
+  .panel-actions {
+    justify-content: flex-start;
+  }
+
+  .hub-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}

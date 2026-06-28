@@ -1,0 +1,66 @@
+<div class="panel-header">
+  <p>
+    Metricas extraidas do relatorio PIT. Cada metrica exibe a evolucao
+    entre a rodada anterior e a atual.
+  </p>
+</div>
+
+<ng-container *ngIf="hasMetrics; else emptyMetricsState">
+  <div class="result-layout">
+
+    <!-- Score principal com barra de progresso -->
+    <div class="score-block" *ngIf="mutationScoreMetric">
+      <div class="score-header">
+        <span class="score-title">{{ mutationScoreMetric.label }}</span>
+        <span class="score-delta">
+          {{ mutationScoreMetric.before }}% → <strong>{{ mutationScoreMetric.after }}%</strong>
+        </span>
+      </div>
+      <div class="score-value">{{ mutationScoreMetric.after }}%</div>
+      <div class="score-bar-track">
+        <div
+          class="score-bar-fill tone-emerald"
+          [style.width.%]="mutationScoreMetric.after"
+        ></div>
+      </div>
+      <small class="score-caption">{{ mutationScoreMetric.helper }}</small>
+    </div>
+
+    <!-- Cards laterais -->
+    <div class="side-metrics">
+
+      <div class="metric-card" *ngIf="coverageMetric">
+        <div class="metric-top">
+          <span class="metric-label">{{ coverageMetric.label }}</span>
+          <span class="metric-delta">
+            {{ coverageMetric.before }}% → <strong>{{ coverageMetric.after }}%</strong>
+          </span>
+        </div>
+        <div class="metric-value tone-blue-value">{{ coverageMetric.after }}%</div>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill tone-blue-fill" [style.width.%]="coverageMetric.after"></div>
+        </div>
+        <small class="metric-caption">{{ coverageMetric.helper }}</small>
+      </div>
+
+      <div class="metric-card" *ngIf="survivorOfCoveredMetric">
+        <div class="metric-top">
+          <span class="metric-label">{{ survivorOfCoveredMetric.label }}</span>
+          <span class="metric-delta">
+            {{ survivorOfCoveredMetric.before }}% → <strong>{{ survivorOfCoveredMetric.after }}%</strong>
+          </span>
+        </div>
+        <div class="metric-value tone-amber-value">{{ survivorOfCoveredMetric.after }}%</div>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill tone-amber-fill" [style.width.%]="survivorOfCoveredMetric.after"></div>
+        </div>
+        <small class="metric-caption">{{ survivorOfCoveredMetric.helper }}</small>
+      </div>
+
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #emptyMetricsState>
+  <div class="empty-state">Sem metricas ainda. Execute uma rodada para visualizar os valores atuais.</div>
+</ng-template>

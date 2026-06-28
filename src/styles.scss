@@ -1,0 +1,173 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+  height: 100%;
+}
+
+:root {
+  --surface-color: #ffffff;
+  --surface-border: #dfe3ea;
+  --gray-25: #fafbfc;
+  --gray-100: #edf1f5;
+
+  --text-primary: #1f2937;
+  --text-secondary: #586578;
+
+  --blue-soft-100: #edf3ff;
+  --blue-soft-200: #d6e2f8;
+  --blue-soft-300: #b9ceef;
+  --blue-soft-500: #4f7fcf;
+  --blue-soft-600: #3f6ebc;
+  --blue-soft-700: #2f568f;
+
+  --emerald-50: #f3faf6;
+  --emerald-100: #e6f5ec;
+  --emerald-500: #2e9f74;
+  --emerald-600: #288b66;
+  --emerald-700: #1f6a4f;
+
+  --amber-100: #fff4e4;
+  --amber-500: #d89840;
+  --amber-700: #8f5d1c;
+
+  --error-bg: #fff5f5;
+  --error-border: #ffe3e3;
+  --error-text: #c92a2a;
+
+  --diff-header-bg: #f4f7fc;
+  --diff-context-bg: #f9fbfd;
+  --diff-added-bg: #edf8f1;
+  --diff-removed-bg: #fff1f1;
+
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+
+  --shadow-soft: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-soft-sm: 0 1px 4px rgba(15, 23, 42, 0.04);
+  --shadow-soft-xs: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f6f8;
+  color: var(--text-primary);
+  color-scheme: light;
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+  margin: 0;
+  min-height: 100%;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+body.theme-dark {
+  --surface-color: #161b22;
+  --surface-border: #2a3240;
+  --gray-25: #12171e;
+  --gray-100: #202834;
+
+  --text-primary: #e9edf3;
+  --text-secondary: #a5b0c0;
+
+  --blue-soft-100: #1f2a3d;
+  --blue-soft-200: #2a3a57;
+  --blue-soft-300: #34507d;
+  --blue-soft-500: #6a9cff;
+  --blue-soft-600: #5a8cef;
+  --blue-soft-700: #9fbfff;
+
+  --emerald-50: #16271f;
+  --emerald-100: #1b3328;
+  --emerald-500: #4cb78f;
+  --emerald-600: #3ea47f;
+  --emerald-700: #85ddbc;
+
+  --amber-100: #332817;
+  --amber-500: #d6a260;
+  --amber-700: #f0c07e;
+
+  --error-bg: #2b1315;
+  --error-border: #4c1d20;
+  --error-text: #ff8787;
+
+  --diff-header-bg: #1c2430;
+  --diff-context-bg: #151c26;
+  --diff-added-bg: #173226;
+  --diff-removed-bg: #3a1f24;
+
+  --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-soft-sm: 0 1px 6px rgba(0, 0, 0, 0.28);
+  --shadow-soft-xs: 0 1px 3px rgba(0, 0, 0, 0.24);
+
+  background: #0f141a;
+  color-scheme: dark;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.mat-step-header {
+  border-radius: 10px;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  min-height: 0;
+}
+
+.api-status-banner {
+  align-items: center;
+  background: var(--amber-100);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--amber-700);
+  display: flex;
+  font-size: 0.82rem;
+  font-weight: 500;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  padding: 0.55rem 0.8rem;
+}
+
+.status-dot {
+  background: #94a3b8;
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+}
+
+.status-dot.warning {
+  background: var(--amber-500);
+  box-shadow: 0 0 0 2px rgba(216, 152, 64, 0.25);
+}
+
+.api-status-banner code {
+  background: var(--gray-100);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: monospace;
+  font-size: 0.76rem;
+  padding: 0.1rem 0.25rem;
+}
