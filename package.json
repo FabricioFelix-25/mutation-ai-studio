@@ -4,9 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:backend": "bash backend/start.sh",
     "start:pit-runner": "node tools/pit-runner/server.mjs",
-    "dev": "concurrently -n BACK,RUNNER,FRONT -c cyan,yellow,magenta \"npm run start:backend\" \"npm run start:pit-runner\" \"npm start\"",
+    "dev": "concurrently -n RUNNER,FRONT -c yellow,magenta \"npm run start:pit-runner\" \"npm start\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

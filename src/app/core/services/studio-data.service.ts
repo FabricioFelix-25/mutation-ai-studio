@@ -97,6 +97,13 @@ export class StudioDataService {
   private activeExecutionStartedAt: number | null = null;
   private activeExecutionLabel: string | null = null;
 
+  // Cronometro de execucao tocado 100% no front. Antes o "Tempo de execucao" so era
+  // recalculado quando o polling do backend disparava change detection, entao os segundos
+  // pulavam de 2 em 2 / 5 em 5. Este signal e atualizado por um setInterval local de 1s
+  // enquanto ha execucao ativa, garantindo contagem suave e independente da rede.
+  private elapsedTimer?: ReturnType<typeof setInterval>;
+  elapsedMsSignal = signal<number | null>(null);
+
   gaugeMetricsSignal = signal<GaugeMetric[]>([]);
   qualityInsightsSignal = signal<InsightFeedback[]>([]);
   diffSnapshotSignal = signal<DiffSnapshot>(this.emptyDiffSnapshot());
@@ -161,8 +168,10 @@ export class StudioDataService {
       },
       {
         label: 'Tempo de execucao',
+        // Le elapsedMsSignal() para que a leitura do signal registre este getter como consumidor:
+        // a cada tick de 1s o Angular reavalia e o cronometro anda de segundo em segundo.
         value: this.activeExecutionStartedAt !== null
-          ? this.formatDuration(Date.now() - this.activeExecutionStartedAt)
+          ? this.formatDuration(this.elapsedMsSignal() ?? (Date.now() - this.activeExecutionStartedAt))
           : this.lastExecutionDurationMs !== null
           ? this.formatDuration(this.lastExecutionDurationMs)
           : '--',
@@ -215,6 +224,7 @@ export class StudioDataService {
     this.lastExecutionDurationMs = null;
     this.activeExecutionStartedAt = null;
     this.activeExecutionLabel = null;
+    this.stopElapsedTimer();
 
     this.gaugeMetricsSignal.set([]);
     this.qualityInsightsSignal.set([]);
@@ -369,6 +379,7 @@ export class StudioDataService {
   setExecutionInProgress(label: string): void {
     this.activeExecutionStartedAt = Date.now();
     this.activeExecutionLabel = label;
+    this.startElapsedTimer();
   }
 
   updateExecutionInProgress(label: string): void {
@@ -376,11 +387,36 @@ export class StudioDataService {
       this.activeExecutionStartedAt = Date.now();
     }
     this.activeExecutionLabel = label;
+    this.startElapsedTimer();
   }
 
   clearExecutionInProgress(): void {
     this.activeExecutionStartedAt = null;
     this.activeExecutionLabel = null;
+    this.stopElapsedTimer();
+  }
+
+  private startElapsedTimer(): void {
+    this.tickElapsed();
+    if (this.elapsedTimer) {
+      return;
+    }
+    this.elapsedTimer = setInterval(() => this.tickElapsed(), 1000);
+  }
+
+  private tickElapsed(): void {
+    if (this.activeExecutionStartedAt === null) {
+      return;
+    }
+    this.elapsedMsSignal.set(Date.now() - this.activeExecutionStartedAt);
+  }
+
+  private stopElapsedTimer(): void {
+    if (this.elapsedTimer) {
+      clearInterval(this.elapsedTimer);
+      this.elapsedTimer = undefined;
+    }
+    this.elapsedMsSignal.set(null);
   }
 
   private async loadSelectedProjectData(): Promise<void> {
