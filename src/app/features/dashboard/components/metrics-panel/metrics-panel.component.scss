@@ -14,7 +14,6 @@
   max-width: 70ch;
 }
 
-/* ── layout principal ─────────────────────────────────── */
 .result-layout {
   align-items: stretch;
   display: grid;
@@ -22,7 +21,6 @@
   grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
 }
 
-/* ── bloco do score principal ─────────────────────────── */
 .score-block {
   background: var(--gray-25);
   border: 1px solid var(--surface-border);
@@ -69,7 +67,6 @@
   line-height: 1.35;
 }
 
-/* ── barras de progresso ──────────────────────────────── */
 .score-bar-track,
 .mini-bar-track {
   background: var(--surface-border);
@@ -98,7 +95,6 @@
 .tone-blue-fill { background: var(--blue-soft-600); }
 .tone-amber-fill{ background: var(--amber-500); }
 
-/* ── cards laterais ───────────────────────────────────── */
 .side-metrics {
   display: grid;
   gap: 0.65rem;
@@ -151,7 +147,6 @@
   line-height: 1.35;
 }
 
-/* ── estado vazio ─────────────────────────────────────── */
 .empty-state {
   background: var(--gray-25);
   border: 1px dashed var(--surface-border);

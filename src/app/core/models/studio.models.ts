@@ -66,4 +66,3 @@ export interface DiffSnapshot {
   beforeLines: DiffLine[];
   afterLines: DiffLine[];
 }
-

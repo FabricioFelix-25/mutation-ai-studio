@@ -97,10 +97,6 @@ export class StudioDataService {
   private activeExecutionStartedAt: number | null = null;
   private activeExecutionLabel: string | null = null;
 
-  // Cronometro de execucao tocado 100% no front. Antes o "Tempo de execucao" so era
-  // recalculado quando o polling do backend disparava change detection, entao os segundos
-  // pulavam de 2 em 2 / 5 em 5. Este signal e atualizado por um setInterval local de 1s
-  // enquanto ha execucao ativa, garantindo contagem suave e independente da rede.
   private elapsedTimer?: ReturnType<typeof setInterval>;
   elapsedMsSignal = signal<number | null>(null);
 
@@ -168,8 +164,6 @@ export class StudioDataService {
       },
       {
         label: 'Tempo de execucao',
-        // Le elapsedMsSignal() para que a leitura do signal registre este getter como consumidor:
-        // a cada tick de 1s o Angular reavalia e o cronometro anda de segundo em segundo.
         value: this.activeExecutionStartedAt !== null
           ? this.formatDuration(this.elapsedMsSignal() ?? (Date.now() - this.activeExecutionStartedAt))
           : this.lastExecutionDurationMs !== null

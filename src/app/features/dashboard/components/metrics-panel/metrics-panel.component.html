@@ -8,7 +8,6 @@
 <ng-container *ngIf="hasMetrics; else emptyMetricsState">
   <div class="result-layout">
 
-    <!-- Score principal com barra de progresso -->
     <div class="score-block" *ngIf="mutationScoreMetric">
       <div class="score-header">
         <span class="score-title">{{ mutationScoreMetric.label }}</span>
@@ -26,7 +25,6 @@
       <small class="score-caption">{{ mutationScoreMetric.helper }}</small>
     </div>
 
-    <!-- Cards laterais -->
     <div class="side-metrics">
 
       <div class="metric-card" *ngIf="coverageMetric">

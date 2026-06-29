@@ -104,4 +104,3 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.themeService.toggleTheme();
   }
 }
-

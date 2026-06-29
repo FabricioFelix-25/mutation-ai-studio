@@ -110,7 +110,7 @@ export class ProjectHubPageComponent implements OnInit {
     await this.dataService.refreshProjectsFromApi();
     this.dataService.getAiModel().subscribe({
       next: (res) => this.aiModelControl.setValue(res.model),
-      error: () => { /* backend offline — deixa vazio */ },
+      error: () => {},
     });
   }
 
